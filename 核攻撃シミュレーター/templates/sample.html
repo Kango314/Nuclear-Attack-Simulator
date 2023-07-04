@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>核爆発シミュレーター</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
+    <style>
+      .icon-red { /* icon-redは最初に指定したクラス名 */
+        filter: hue-rotate(150deg);
+      }
+      .icon-bk {
+        filter: hue-rotate(300deg);
+      }
+      .icon-45 {
+        filter: hue-rotate(45deg)
+      }
+      .icon-90 {
+        filter: hue-rotate(90deg)
+      }
+      .icon-135 {
+        filter: hue-rotate(135deg)
+      }
+      .icon-180 {
+        filter: hue-rotate(180deg)
+      }
+      .icon-225 {
+        filter: hue-rotate(225deg)
+      }
+    </style>
+    <form method="GET" action="bomb">
+      <table>
+        <tr><td colspan="3">爆心地情報</td></tr>
+        <tr><td>緯度</td><td><input type="text" name="ido" id="ido"></td><td rowspan="4"><input type="button" onclick="del()" value="消去"></td></tr>
+        <tr><td>経度</td><td><input type="text" name="kei" id="kei"></td></tr>
+        <tr>
+          <td>種類</td><td>
+            <select name="bomb">
+              <option value="Little Boy - Hiroshima bomb(15kt)">広島型原爆(15kt)</option>
+              <option value="North Korea weapon tested in 2013(10kt)">北朝鮮2013年核実験(10kt)</option>
+              <option value="Fat man - Nagasaki bomb(20kt)">長崎原爆(20kt)</option>
+              <option value="virtual bomb(50kt)">仮想爆弾(50kt)</option>
+            </select>
+          </td></tr>
+        <tr><td colspan="3">地点情報</td></tr>
+        <tr><td>緯度</td><td><input type="text" name="sido" id="sido"></td><td rowspan="3"><input type="button" onclick="del2()" value="消去"></td></tr>
+        <tr><td>経度</td><td><input type="text" name="skei" id="skei"></td></tr>
+        <tr><td colspan="3"><input type="submit" value="シミュレート"></td></tr>
+      </table>
+    </form>
+    {{ state | safe }}
+      
+  </head>
+  
+  <body onload="init()">
+    <script>
+      function init(){
+        var map = L.map('mapcontainer',{zoomControl:true});
+        map.on('click', function(e) {
+          //クリック位置経緯度取得
+          lat = e.latlng.lat;
+          lng = e.latlng.lng;
+          
+          //経緯度表示
+          if(document.getElementById("ido").value=="" || document.getElementById("kei").value==""){
+            document.getElementById("ido").value = lat;
+            document.getElementById("kei").value = lng;
+          }
+          else{
+            document.getElementById("sido").value = lat;
+            document.getElementById("skei").value = lng;
+          }
+      } );
+        //座標の指定
+  {{ point | safe}}
+            const redIcon = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-red", // <= ここでクラス名を指定
+          });
+          const bkIcon = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-bk", // <= ここでクラス名を指定
+          });
+          const Icon45 = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-45", // <= ここでクラス名を指定
+          });
+          const Icon90 = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-90", // <= ここでクラス名を指定
+          });
+          const Icon135 = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-135", // <= ここでクラス名を指定
+          });
+          const Icon180 = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-180", // <= ここでクラス名を指定
+          });
+          const Icon225 = L.icon({
+            iconUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon.png",
+            iconRetinaUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png",
+            shadowUrl: "https://esm.sh/leaflet@1.9.2/dist/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+            className: "icon-225", // <= ここでクラス名を指定
+          });
+          map.setView(mpoint, 12);
+          L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+          attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+        }).addTo(map);
+        
+  {{ dst | safe }}
+      }
+      
+    </script> 
+    <script>
+      function del(){
+        document.getElementById("ido").value = "";
+        document.getElementById("kei").value = "";
+      }
+      function del2(){
+        document.getElementById("sido").value = "";
+        document.getElementById("skei").value = "";
+      }
+    </script>
+    
+    <div id="mapcontainer" style="margin-left:auto;margin-right:auto;width:70%;height:900px"></div>
+    {{dst2 | safe}}
+  </body>
+</html>
+
