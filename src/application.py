@@ -11,8 +11,8 @@ y = df["marker_lng"].mean()
 # データの配列化
 data = df.values
 
-app = Flask(__name__)
-print("app")
+application = Flask(__name__)
+print("application")
 
 #----------------------------------------------------------------
 # 核爆弾の連想配列
@@ -46,7 +46,7 @@ bom = {"North Korea weapon tested in 2013(10kt)": {
        }
        
 #----------------------------------------------------------------
-@app.route("/")
+@application.route("/")
 def hello_world():
     dst = "" #出力結果
     point = "\t\t\tvar mpoint = ["+ html.escape(str(x)) +", "+ html.escape(str(y)) +"];" #中心座標(全座標の重心(平均値))
@@ -65,7 +65,7 @@ def hello_world():
             return render_template("sample.html", dst=dst, point=point, err="<h2>緯度経度情報を埋めてください</h2>")
     #-------------------------------------------------------------
 
-@app.route("/bomb")
+@application.route("/bomb")
 def bomb():
     #-------------------------------------------------------------
     #URLパラメータ
@@ -170,4 +170,4 @@ def bomb():
     return render_template("sample.html", dst=dst, point=point, state=state, dst2=dst2, bomb=b)
     
 if __name__ == "__main__":
-    app.run()
+    application.run()
