@@ -34,7 +34,12 @@
         <tr><td colspan="3">爆心地情報</td></tr>
         <tr><td>緯度</td><td><input type="text" name="ido" id="ido" required="required" readonly></td><td rowspan="4"><input type="button" onclick="del()" value="消去"></td></tr>
         <tr><td>経度</td><td><input type="text" name="kei" id="kei" required="required" readonly></td></tr>
-        <tr><td>種類</td><td><select name="bomb"><option value="Little Boy - Hiroshima bomb(15kt)">広島型原爆(15kt)</option><option value="North Korea weapon tested in 2013(10kt)">北朝鮮2013年核実験(10kt)</option></select></td></tr>
+        <tr><td>種類</td><td><select name="bomb">
+          <option value="Little Boy - Hiroshima bomb(15kt)">広島型原爆(15kt)</option>
+          <option value="North Korea weapon tested in 2013(10kt)">北朝鮮2013年核実験(10kt)</option>
+        　<option value="Fat man - Nagasaki bomb(20kt)">長崎原爆(20kt)</option>
+          <option value="virtual bomb(50kt)">仮想爆弾(50kt)</option>        
+        </select></td></tr>
         <tr><td colspan="3">地点情報</td></tr>
         <tr><td>緯度</td><td><input type="text" name="sido" id="sido" readonly required="required"></td><td rowspan="3"><input type="button" onclick="del2()" value="消去"></td></tr>
         <tr><td>経度</td><td><input type="text" name="skei" id="skei" readonly required="required"></td></tr>
