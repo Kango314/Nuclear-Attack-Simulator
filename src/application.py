@@ -147,4 +147,4 @@ def bomb():
     return render_template("sample.html", dst=dst, point=point, state=state, dst2=dst2, bomb=b)
     
 if __name__ == "__main__":
-    application.run(port=5005)
+    application.run()
