@@ -124,15 +124,19 @@ def bomb():
     dst2 = ""
     df_esc = pd.DataFrame(esc)
     df_esc.columns = ["避難場所", "緯度", "経度", "避難所までの距離", "大まかな方角"]
-    df_esc = df_esc.query("避難所までの距離<%d"%(dis))
+    #df_esc = df_esc.query("避難所までの距離<%d"%(dis))
     df_esc = df_esc.sort_values("避難所までの距離")
     esc = df_esc.head(num).values
     dst2 = dst2 + "<h2>最適な避難所" + str(len(esc)) + "選</h2>"
     dst2 = dst2 + "<table border=1>\n"
     dst2 = dst2 + "\t<tr><th>避難場所</th><th>緯度</th><th>経度</th><th>避難所までの距離</th><th>大まかな方角</th></tr>\n"
-    for i in range(len(esc)):
-        dst = dst + "L.polyline([["+ html.escape(str(esc[i][1])) +","+ html.escape(str(esc[i][2]))+"],["+ html.escape(str(sx)) +","+ html.escape(str(sy)) +"]], { color: \"#000000\", weight: 5 }).addTo(map);"
-        dst2 = dst2 + "\t<tr><td>"+ html.escape(str(esc[i][0])) +"</td><td>"+ html.escape(str(esc[i][1])) +"</td><td>"+ html.escape(str(esc[i][2])) +"</td><td>"+ html.escape(str(int(esc[i][3]))) +"m</td><td>"+ html.escape(str(esc[i][4])) +"</td></tr>\n"
+    for i in range(num):
+        if esc[i][3] <= dis:
+            dst = dst + "L.polyline([["+ html.escape(str(esc[i][1])) +","+ html.escape(str(esc[i][2]))+"],["+ html.escape(str(sx)) +","+ html.escape(str(sy)) +"]], { color: \"#008000\", weight: 5 }).addTo(map);"
+            dst2 = dst2 + "\t<tr><td>"+ html.escape(str(esc[i][0])) +"</td><td>"+ html.escape(str(esc[i][1])) +"</td><td>"+ html.escape(str(esc[i][2])) +"</td><td>"+ html.escape(str(int(esc[i][3]))) +"m</td><td>"+ html.escape(str(esc[i][4])) +"</td></tr>\n"
+        else:
+            dst = dst + "L.polyline([["+ html.escape(str(esc[i][1])) +","+ html.escape(str(esc[i][2]))+"],["+ html.escape(str(sx)) +","+ html.escape(str(sy)) +"]], { color: \"#000000\", weight: 5 }).addTo(map);"
+            dst2 = dst2 + "\t<tr><td><font color=\"#FF0000\">"+ html.escape(str(esc[i][0])) +"</font></td><td>"+ html.escape(str(esc[i][1])) +"</td><td>"+ html.escape(str(esc[i][2])) +"</td><td>"+ html.escape(str(int(esc[i][3]))) +"m</td><td>"+ html.escape(str(esc[i][4])) +"</td></tr>\n"
     dst2 = dst2 + "</table>"
     dst2 = dst2 + "<h2>危険な避難所</h2>\n"
     dst2 = dst2 + "<table border=1>\n"
@@ -143,4 +147,4 @@ def bomb():
     return render_template("sample.html", dst=dst, point=point, state=state, dst2=dst2, bomb=b)
     
 if __name__ == "__main__":
-    application.run()
+    application.run(port=5005)
