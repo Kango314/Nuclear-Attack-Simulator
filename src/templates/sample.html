@@ -32,22 +32,50 @@
     <form method="GET" action="bomb">
       <table>
         <tr><td colspan="3">爆心地情報</td></tr>
-        <tr><td>緯度</td><td><input type="text" name="ido" id="ido" required="required" readonly></td><td rowspan="4"><input type="button" onclick="del()" value="消去"></td></tr>
-        <tr><td>経度</td><td><input type="text" name="kei" id="kei" required="required" readonly></td></tr>
+        <tr><td>緯度</td><td><input type="text" name="ido" value="{{ ido | safe }}" id="ido" required="required" readonly></td><td rowspan="4"><input type="button" onclick="del()" value="消去"></td></tr>
+        <tr><td>経度</td><td><input type="text" name="kei" value="{{ kei | safe }}" id="kei" required="required" readonly></td></tr>
         <tr><td>種類</td><td>
           <select name="bomb">
             <option value="Little Boy - Hiroshima bomb(15kt)">広島型原爆(15kt)</option>
             <option value="North Korea weapon tested in 2013(10kt)">北朝鮮2013年核実験(10kt)</option>
             <option value="Fat man - Nagasaki bomb(20kt)">長崎原爆(20kt)</option>
             <option value="virtual bomb(50kt)">仮想爆弾(50kt)</option>
+            <option value="virtual bomb(100kt)">仮想爆弾(100kt)</option>
+            <option value="virtual bomb(150kt)">仮想爆弾(150kt)</option>
+            <option value="virtual bomb(200kt)">仮想爆弾(200kt)</option>
+            <option value="virtual bomb(250kt)">仮想爆弾(250kt)</option>
+            <option value="virtual bomb(300kt)">仮想爆弾(300kt)</option>
+            <option value="virtual bomb(350kt)">仮想爆弾(350kt)</option>
+            <option value="virtual bomb(400kt)">仮想爆弾(400kt)</option>
+            <option value="virtual bomb(450kt)">仮想爆弾(450kt)</option>
+            <option value="virtual bomb(500kt)">仮想爆弾(500kt)</option>
           </select>
         </td></tr>
         <tr><td colspan="3">地点情報</td></tr>
-        <tr><td>緯度</td><td><input type="text" name="sido" id="sido" readonly required="required"></td><td rowspan="3"><input type="button" onclick="del2()" value="消去"></td></tr>
-        <tr><td>経度</td><td><input type="text" name="skei" id="skei" readonly required="required"></td></tr>
+        <tr><td>緯度</td><td><input type="text" name="sido" value="{{ sido | safe }}" id="sido" readonly required="required"></td><td rowspan="3"><input type="button" onclick="del2()" value="消去"></td></tr>
+        <tr><td>経度</td><td><input type="text" name="skei" value="{{ skei | safe }}" id="skei" readonly required="required"></td></tr>
         <tr><td colspan="3">避難情報</td></tr>
         <tr><td>表示する避難所数</td><td><input type="number" name="num" value="5" required="required"></td></tr>
-        <tr><td>避難できる距離(m)</td><td><input type="number" name="dis" value="1000" required="required"></td></tr>
+        <tr><td>避難できる時間(分)</td><td><input type="number" name="time" value="8" required="required"></td></tr>
+        <tr><td>地下に隠れる時間(分)</td><td><input type="number" name="hide" value="2" required="required"></td></tr>
+        <tr><td>避難者の性別</td><td>男性<input type="radio" name="sex" value="m" checked><br>
+        女性<input type="radio" name="sex" value="w"></td></tr>
+        <tr><td>年齢</td><td>
+          <select name="age">
+            <option value="20e">20代前半</option>
+            <option value="20l">20代後半</option>
+            <option value="30e">30代前半</option>
+            <option value="30l">30代後半</option>
+            <option value="40e">40代前半</option>
+            <option value="40l">40代後半</option>
+            <option value="50e">50代前半</option>
+            <option value="50l">50代後半</option>
+            <option value="60e">60代前半</option>
+            <option value="60l">60代後半</option>
+            <option value="70e">70代前半</option>
+            <option value="70l">70代後半</option>
+          </select>
+        </td></tr>
         <tr><td colspan="3"><input type="submit" value="シミュレート"></td></tr>
       </table>
     </form>
