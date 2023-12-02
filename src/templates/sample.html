@@ -96,23 +96,13 @@
           
           //経緯度表示
           if(document.getElementById("ido").value=="" || document.getElementById("kei").value==""){
-            if(lat >= 35.47163112478794 && lat <= 35.89706022358746 && lng >= 138.94340515136722 && lng <= 139.92324829101565){
-              document.getElementById("ido").value = lat;
-              document.getElementById("kei").value = lng;
-            }
-            else{
-              alert("東京都内をクリックしてください")
-            }
+            document.getElementById("ido").value = lat;
+            document.getElementById("kei").value = lng;
           }
           else{
-          if(lat >= 35.47163112478794 && lat <= 35.89706022358746 && lng >= 138.94340515136722 && lng <= 139.92324829101565){
-              document.getElementById("sido").value = lat;
-              document.getElementById("skei").value = lng;
-            }
-            else{
-              alert("東京都内をクリックしてください")
-            }
-        }
+            document.getElementById("sido").value = lat;
+            document.getElementById("skei").value = lng;
+          }
       });
         //座標の指定
   {{ point | safe}}
